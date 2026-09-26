@@ -14,9 +14,14 @@ class Store:
         self._tables: dict[str, list[dict[str, Any]]] = {
             name: [dict(row) for row in rows] for name, rows in SEED_ROWS.items()
         }
+        self._buckets: dict[str, dict[Any, Any]] = {}
 
     def module_names(self) -> list[str]:
         return sorted(self._tables)
+
+    def bucket(self, name: str) -> dict[Any, Any]:
+        """取得不走通用列表模型的附属数据，如报销草稿、审批日志。"""
+        return self._buckets.setdefault(name, {})
 
     def rows(self, module: str) -> list[dict[str, Any]]:
         return self._tables.setdefault(module, [])

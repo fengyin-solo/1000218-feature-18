@@ -75,4 +75,6 @@ npm run dev
 - 每个模块的前端页面在 `frontend/src/views/<模块>/index.vue`，后端接口在
   `backend/app/routers/<模块>.py`，业务规则在 `backend/app/services/<模块>.py`。
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
+- 费用报销额外支持 `drafts` 与 `history`：未提交的处理动作、补充说明、所在位置可恢复；正式处理后草稿失效，处理日志只追加不覆盖。
+- 费用报销正式动作可用 `X-Request-Id` 做幂等重试，并通过单据 `version` 标识并发处理；已打款单据拒绝后续覆盖。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。
