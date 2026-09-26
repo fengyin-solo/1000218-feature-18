@@ -19,6 +19,7 @@ class ActionResult(BaseModel):
     ok: bool
     message: str
     entry: dict[str, Any] | None = None
+    replayed: bool = False
 
 
 class EntryPayload(BaseModel):
@@ -26,6 +27,24 @@ class EntryPayload(BaseModel):
 
     values: dict[str, Any] = Field(default_factory=dict)
     remark: str | None = None
+
+
+class DraftPayload(BaseModel):
+    """费用报销处理草稿：未完成的动作选择、补充说明与面板位置。"""
+
+    action: str | None = None
+    note: str | None = None
+    position: int | None = None
+    operator: str | None = None
+
+
+class ActionPayload(BaseModel):
+    """费用报销正式提交：动作、处理人、补充说明与防重复提交的请求编号。"""
+
+    action: str
+    note: str | None = None
+    operator: str | None = "值班管理员"
+    request_id: str | None = None
 
 
 
